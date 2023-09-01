@@ -6,6 +6,7 @@
 /**
  * struct binary_tree_s - Binary tree node
  *
+ * binary_tree_node - Creates a new binary tree node
  * @n: Integer stored in the node
  * @parent: Pointer to the parent node
  * @left: Pointer to the left child node
