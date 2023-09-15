@@ -1,3 +1,5 @@
+/* 0-sandpiles.c */
+
 #include <stdio.h>
 
 void print_grid(int grid[3][3]) {
@@ -23,7 +25,7 @@ void topple(int grid[3][3], int x, int y) {
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
     int result[3][3];
-    int i, j; // Move variable declarations to the beginning
+    int i, j; /* Move variable declarations to the beginning */
 
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
@@ -44,10 +46,10 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
             if (unstable) break;
         }
 
-        // If no unstable cells, exit the loop
+        /* If no unstable cells, exit the loop */
         if (!unstable) break;
 
-        // Topple unstable cells
+        /* Topple unstable cells */
         int temp[3][3];
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
