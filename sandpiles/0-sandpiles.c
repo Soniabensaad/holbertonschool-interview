@@ -1,8 +1,9 @@
 #include <stdio.h>
 
 void print_grid(int grid[3][3]) {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
             printf("%d", grid[i][j]);
             if (j < 2) {
                 printf(" ");
@@ -22,10 +23,10 @@ void topple(int grid[3][3], int x, int y) {
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
     int result[3][3];
+    int i, j; // Move variable declarations to the beginning
 
-   
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
             result[i][j] = grid1[i][j] + grid2[i][j];
         }
     }
@@ -33,8 +34,8 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
     while (1) {
         int unstable = 0;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
                 if (result[i][j] > 3) {
                     unstable = 1;
                     break;
@@ -48,14 +49,14 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
 
         // Topple unstable cells
         int temp[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
                 temp[i][j] = result[i][j];
             }
         }
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
                 if (temp[i][j] > 3) {
                     topple(result, i, j);
                 }
@@ -68,8 +69,8 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
         }
     }
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
             grid1[i][j] = result[i][j];
         }
     }
