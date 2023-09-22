@@ -1,3 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * struct listint_s - singly linked list
+ * @n: integer
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure
+ * for Holberton project
+ */
+typedef struct listint_s
+{
+    int n;
+    struct listint_s *next;
+} listint_t;
+
+// Function to check if a linked list is a palindrome
 int is_palindrome(listint_t **head) {
     if (*head == NULL || (*head)->next == NULL) {
         return 1; // An empty list or a single-node list is considered a palindrome
@@ -36,3 +54,5 @@ int is_palindrome(listint_t **head) {
 
     return 1; // It's a palindrome
 }
+
+// Rest of your code, including the main function and other utility functions
