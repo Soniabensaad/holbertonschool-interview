@@ -3,20 +3,6 @@
 stdin line by line and computes metrics"""
 import sys
 
-if __name__ == "__main__":
-    """code"""
-    code_status = {
-        "200": 0,
-        "301": 0,
-        "400": 0,
-        "401": 0,
-        "403": 0,
-        "404": 0,
-        "405": 0,
-        "500": 0
-    }
-    count = 0
-    file_size = 0
 
 def parsed_line(line):
     """read parse line"""
@@ -46,3 +32,19 @@ except KeyboardInterrupt:
     print_stats()
     raise
 print_stats()
+
+if __name__ == "__main__":
+    """code"""
+    code_status = {
+        "200": 0,
+        "301": 0,
+        "400": 0,
+        "401": 0,
+        "403": 0,
+        "404": 0,
+        "405": 0,
+        "500": 0
+    }
+    count = 0
+    file_size = 0
+
