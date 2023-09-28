@@ -4,6 +4,7 @@ stdin line by line and computes metrics"""
 import sys
 
 if __name__ == "__main__":
+    """code"""
     code_status = {
         "200": 0,
         "301": 0,
