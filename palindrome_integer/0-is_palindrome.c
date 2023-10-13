@@ -18,13 +18,8 @@
 
 int is_palindrome(unsigned long n) {
     char str[20];
-    int m;
-    int i;
+    int m, i;
     
-    if (n < 2) {
-        return false;
-    }
-
     m = sprintf(str, "%lu", n);
     
     for (i = 0; i < m / 2; i++) {
@@ -35,3 +30,9 @@ int is_palindrome(unsigned long n) {
     
     return true;
 }
+In this corrected code, we removed the check for n < 2 because, as mentioned earlier, all single-digit numbers are palindromes, including 0. Now, the code should correctly check for palindromes and return true when applicable.
+
+
+
+
+
