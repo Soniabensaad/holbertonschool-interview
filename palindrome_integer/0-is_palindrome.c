@@ -30,9 +30,4 @@ int is_palindrome(unsigned long n) {
     
     return true;
 }
-In this corrected code, we removed the check for n < 2 because, as mentioned earlier, all single-digit numbers are palindromes, including 0. Now, the code should correctly check for palindromes and return true when applicable.
-
-
-
-
 
