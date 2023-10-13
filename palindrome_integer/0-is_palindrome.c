@@ -17,14 +17,16 @@
 #include <stdbool.h>
 
 int is_palindrome(unsigned long n) {
+    char str[20];
+    int m;
+    int i;
+    
     if (n < 2) {
         return false;
     }
+
+    m = sprintf(str, "%lu", n);
     
-    char str[20];
-    int m = sprintf(str, "%lu", n);
-    
-    int i;
     for (i = 0; i < m / 2; i++) {
         if (str[i] != str[m - i - 1]) {
             return false;
