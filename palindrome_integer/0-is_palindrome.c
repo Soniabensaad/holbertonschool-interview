@@ -20,12 +20,16 @@ int is_palindrome(unsigned long n) {
     if (n < 2) {
         return false;
     }
+    
     char str[20];
     int m = sprintf(str, "%lu", n);
-    for (int i = 0; i < m / 2; i++) {
+    
+    int i;
+    for (i = 0; i < m / 2; i++) {
         if (str[i] != str[m - i - 1]) {
             return false;
         }
     }
+    
     return true;
 }
