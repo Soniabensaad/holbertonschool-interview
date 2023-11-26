@@ -1,61 +1,61 @@
 #!/usr/bin/python3
-""" N queens backtracking """
-import sys
+
+from sys import argv
 
 
-class NQueen:
-    """ Class Queens """
+def safe_position(queens, row, column):
+    """checks if a new position is safe from attack from all other queens
 
-    def __init__(self, n):
-        """ Constructor """
-        self.n = n
-        self.x = [0 for i in range(n + 1)]
-        self.res = []
+    Args:
+        queens    (list[list[2]]): positions of all other queens
+        row       (int)          : row value of new position
+        column    (int)          : column value of new position
 
-    def place(self, k, i):
-        """ Check if a secure place
-        """
+    Returns:
+        bool: True if position is safe | False otherwise
+    """
+    for queen in queens:
+        # "If a queen exists in row or column..."
+        if queen[0] == row or queen[1] == column:
+            return False
+        # "If a queen exists in a position diagonal to [row, column]..."
+        if abs(queen[0] - row) == abs(queen[1] - column):
+            return False
 
-        for j in range(1, k):
-            if self.x[j] == i or \
-               abs(self.x[j] - i) == abs(j - k):
-                return 0
-        return 1
-
-    def nQueen(self, k):
-        """ Resolve the nqueen
-        """
-        for i in range(1, self.n + 1):
-            if self.place(k, i):
-                self.x[k] = i
-                if k == self.n:
-                    solution = []
-                    for i in range(1, self.n + 1):
-                        solution.append([i - 1, self.x[i] - 1])
-                    self.res.append(solution)
-                else:
-                    self.nQueen(k + 1)
-        return self.res
+    return True
 
 
-if len(sys.argv) != 2:
-    print("Usage: nqueens N")
-    sys.exit(1)
+def nqueens(rows, queens=[], col=0):
+    """prints all possible position combinations for N queens in an NxN
+    chessboard, such that no queen can attack another queen
 
-N = sys.argv[1]
+    Args:
+        N      (int) : number of queens
+        queens (list): list of queens valid positions.
+    """
+    if len(queens) == N:
+        print(queens)
+        return
 
-try:
-    N = int(N)
-except ValueError:
-    print("N must be a number")
-    sys.exit(1)
+    for row in rows:
+        if safe_position(queens, row, col):
+            nqueens(rows.difference({row}), queens + [[row, col]], col + 1)
 
-if N < 4:
-    print("N must be at least 4")
-    sys.exit(1)
 
-queen = NQueen(N)
-result = queen.nQueen(1)
+if __name__ == '__main__':
 
-for i in result:
-    print(i)
+    if len(argv) != 2:
+        print('Usage: nqueens N')
+        exit(1)
+
+    try:
+        N = int(argv[1])
+    except ValueError:
+        print('N must be a number')
+        exit(1)
+
+    if N < 4:
+        print('N must be at least 4')
+        exit(1)
+
+    nqueens(set(range(N)))
