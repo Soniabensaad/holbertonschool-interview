@@ -15,23 +15,34 @@ if (!movieId) {
     } else {
       // Parse the JSON response
       const film = JSON.parse(body);
-      
-      // Access the characters list for the current film
-      const characters = film.characters;
 
-      // Display characters in order
-      characters.forEach(characterUrl => {
-        // Fetch individual character details
-        request(characterUrl, (error, response, body) => {
-          if (error) {
-            console.error('Error fetching character data:', error);
-          } else {
-            // Parse the JSON response for the character
-            const character = JSON.parse(body);
-            console.log(character.name);
-          }
+      // Access the characters list for the current film
+      const charactersPromises = film.characters.map(characterUrl => {
+        // Return a promise for each character's details
+        return new Promise((resolve, reject) => {
+          request(characterUrl, (error, response, body) => {
+            if (error) {
+              reject(`Error fetching character data: ${error}`);
+            } else {
+              // Parse the JSON response for the character
+              const character = JSON.parse(body);
+              resolve(character.name);
+            }
+          });
         });
       });
+
+      // Wait for all promises to resolve
+      Promise.all(charactersPromises)
+        .then(characterNames => {
+          // Display characters in order
+          characterNames.forEach(characterName => {
+            console.log(characterName);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
   });
 }
