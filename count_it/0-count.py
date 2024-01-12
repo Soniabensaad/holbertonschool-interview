@@ -1,46 +1,65 @@
-#!/usr/bin/python3
-import praw
-
-def count_words(subreddit, word_list, after=None, counts=None):
-    if counts is None:
-        counts = {}
-
-    reddit = praw.Reddit(client_id='YOUR_CLIENT_ID',
-                         client_secret='YOUR_CLIENT_SECRET',
-                         user_agent='YOUR_USER_AGENT')
-
+def count_words(subreddit, word_list, after=None, count={}):
+    """
+    Queries the Reddit API, parses titles of all hot articles,
+    and prints sorted count
+    """
+    import json
+    import requests
+    if after is None:
+        sub_URL = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    else:
+        sub_URL = 'https://www.reddit.com/r/{}/hot.json?after={}'.format(
+            subreddit, after)
+    subreddit_info = requests.get(sub_URL,
+                                  headers={"user-agent": "user"},
+                                  allow_redirects=False)
+    for word in word_list:
+        word = word.lower()
+        if word not in count.keys():
+            count[word] = 0
     try:
-        subreddit_obj = reddit.subreddit(subreddit)
+        data = subreddit_info.json().get("data")
     except:
-       
         return
-
-    hot_posts = subreddit_obj.hot(limit=100, params={'after': after})
-
-    for post in hot_posts:
-        title = post.title.lower()
-
+    children = data.get("children")
+    for child in children:
+        title = (child.get("data").get("title").lower())
+        title = title.split(' ')
         for word in word_list:
-            keyword = word.lower()
-
-            
-            if f' {keyword} ' in f' {title} ':
-                counts[keyword] = counts.get(keyword, 0) + title.count(f' {keyword} ')
-
-    next_page = hot_posts.params.get('after')
-    if next_page:
-        count_words(subreddit, word_list, after=next_page, counts=counts)
-    else:
-        sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
-
-        for keyword, count in sorted_counts:
-            print(f"{keyword}: {count}")
-
-if __name__ == '__main__':
-    import sys
-
-    if len(sys.argv) < 2:
-        print("Usage: {} <subreddit>".format(sys.argv[0]))
-        print("Ex: {} programming".format(sys.argv[0]))
-    else:
-        count_words(sys.argv[1], [x for x in sys.argv[2:]])
+            word = word.lower()
+            count[word] += title.count(word)
+    after = data.get("after")
+    if after is not None:
+        return count_words(subreddit, word_list, after, count)
+    result = []
+    for k in count.keys():
+        if count[k] != 0:
+            if result == []:
+                result.append("{}: {}".format(k, count[k]))
+            else:
+                for i in range(len(result)):
+                    if count[k] > int(result[i].split(' ')[1]):
+                        result = result[:i] + \
+                            ["{}: {}".format(k, count[k])] + \
+                            result[i:]
+                        break
+                    elif count[k] == int(result[i].split(' ')[1]):
+                        alpha_list = [k, result[i].split(' ')[0]]
+                        j = 1
+                        if (i + j) >= len(result):
+                            continue
+                        while count[k] == int(result[i + j].split(' ')[1]):
+                            alpha_list.append(result[i + j].split(' ')[0])
+                        alpha_list = alpha_list.sort
+                        for j in range(len(alpha_list)):
+                            if k == alpha_list[j]:
+                                result = result[:i + j] + \
+                                    ["{}: {}".format(k, count[k])] + \
+                                    result[i + j:]
+                    else:
+                        continue
+                else:
+                    result.append("{}: {}".format(k, count[k]))
+    if result != []:
+        for printing in result:
+            print(printing)
