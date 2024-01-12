@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 def count_words(subreddit, word_list, after=None, count={}):
     """
     Queries the Reddit API, parses titles of all hot articles,
