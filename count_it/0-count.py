@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import praw
 
 def count_words(subreddit, word_list, after=None, counts=None):
