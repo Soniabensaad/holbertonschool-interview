@@ -12,7 +12,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
     try:
         subreddit_obj = reddit.subreddit(subreddit)
     except:
-        # Invalid subreddit or other exception
+       
         return
 
     hot_posts = subreddit_obj.hot(limit=100, params={'after': after})
@@ -23,7 +23,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
         for word in word_list:
             keyword = word.lower()
 
-            # Match whole words only
+            
             if f' {keyword} ' in f' {title} ':
                 counts[keyword] = counts.get(keyword, 0) + title.count(f' {keyword} ')
 
