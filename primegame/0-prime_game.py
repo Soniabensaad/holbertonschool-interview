@@ -7,12 +7,12 @@ of playing the Prime Game
 
 def isWinner(x, nums):
     """
-    The Prime Game, 
+    The Prime Game,
     starting from the number 1 up to and including n,
-      involves players taking turns selecting prime numbers and eliminating them along with their multiples from the set.
-        The game concludes after a set number of rounds,
-          determining the winner. Maria and Ben engage in this game,
-            with Maria taking the first turn always.
+    involves players taking turns selecting prime numbers and eliminating them along with their multiples from the set.
+    The game concludes after a set number of rounds,
+    determining the winner. Maria and Ben engage in this game,
+    with Maria taking the first turn always.
 
     parameters:
         x [int]:
